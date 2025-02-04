@@ -1,4 +1,4 @@
-export default [
+export default  [
     {
         path: '/home',
         name: 'home',
@@ -25,18 +25,18 @@ export default [
         label: '其他',
         icon: 'SettingOutlined',
         children: [
-            {
-                path: '/other/pageOne',
-                name: 'page1',
-                label: '页面1',
-                icon: 'SettingOutlined'
-            },
-            {
-                path: '/other/pageTwo',
-                name: 'page2',
-                label: '页面2',
-                icon: 'SettingOutlined'
-            }
+        {
+            path: '/other/pageOne',
+            name: 'page1',
+            label: '页面1',
+            icon: 'SettingOutlined'
+        },
+        {
+            path: '/other/pageTwo',
+            name: 'page2',
+            label: '页面2',
+            icon: 'SettingOutlined'
+        }
         ]
     }
 ]

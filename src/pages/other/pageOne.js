@@ -1,11 +1,11 @@
-import React from "react";
+import * as React from 'react'
 
-const PageOne = () => {
+const pageOne = () => {
     return(
         <div>
-           PageOne页面
+            pageOne页面
         </div>
     )
 }
 
-export default PageOne
+export default pageOne

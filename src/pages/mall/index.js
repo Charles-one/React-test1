@@ -1,9 +1,9 @@
-import React from "react";
+import * as React from 'react'
 
 const Mall = () => {
     return(
         <div>
-           Mall页面
+            Mall页面
         </div>
     )
 }

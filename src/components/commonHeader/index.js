@@ -15,48 +15,48 @@ const CommonHeader = ({ collapsed }) => {
     }
     const navigate = useNavigate()
     const items = [
-        {
-            key: '1',
-            label: (
-                <a target="_blank" rel="noopener noreferrer">
-                    个人中心
-                </a>
-            ),
-        },
-        {
-            key: '2',
-            label: (
-                <a onClick={() => logout(!collapsed)} target="_blank" rel="noopener noreferrer" >
-                    退出
-                </a>
-            ),
-        }
-    ]
-    // 登出
-    const logout = () => {
-        localStorage.removeItem('token')
-        navigate('/login')
-    }
-    return (
+      {
+          key: '1',
+          label: (
+              <a target="_blank" rel="noopener noreferrer">
+              个人中心
+              </a>
+          ),
+      },
+      {
+          key: '2',
+          label: (
+              <a onClick={() => logout(!collapsed)} target="_blank" rel="noopener noreferrer" >
+              退出
+              </a>
+          ),
+      }
+  ]
+  // 登出
+  const logout = () => {
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
+    return(
         <Header className="header-container">
-            <Button
-                type="text"
-                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                onClick={() => setCollapsed(!collapsed)}
-                style={{
-                    fontSize: '16px',
-                    width: 64,
-                    height: 32,
-                    backgroundColor: '#fff'
-                }}
-            />
-            <Dropdown
-                menu={{ items }}
-            >
-                <a onClick={(e) => e.preventDefault()}>
-                    <Avatar size={36} src={<img src={require("../../assets/images/1111.png")} />} />
-                </a>
-            </Dropdown>
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+            style={{
+              fontSize: '16px',
+              width: 64,
+              height: 32,
+              backgroundColor: '#fff'
+            }}
+          />
+          <Dropdown
+            menu={{items}}
+          >
+            <a onClick={(e) => e.preventDefault()}>
+                <Avatar size={36} src={<img src={require("../../assets/images/user.png")}/> }/>
+            </a>
+          </Dropdown>
         </Header>
     )
 }
