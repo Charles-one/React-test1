@@ -1,11 +1,16 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import Main from '../pages/main'
 import Home from '../pages/home'
-import Mall from '../pages/mall'
-import User from '../pages/user'
-import pageOne from '../pages/other/pageOne'
-import pageTwo from '../pages/other/pageTwo'
+import DepartmentManagement from '../pages/DepartmentManagement'
+import EmployeeManagement from '../pages/EmployeeManagement'
 import Login from '../pages/login'
+import AttendanceManagement from '../pages/AttendanceManagement'
+import OvertimeRequest from '../pages/OvertimeRequest'
+import LeaveRequest from '../pages/LeaveRequest'
+import ShiftSwapRequest from '../pages/ShiftSwapRequest'
+import AttendanceSummary from '../pages/AttendanceSummary'
+import MyProfile from '../pages/other/MyProfile'
+import ChangePassword from '../pages/other/ChangePassword'
 const routes = [
     {
         path: '/',
@@ -20,26 +25,47 @@ const routes = [
                 Component: Home,
             },
             {
-                path: 'mall',
-                Component: Mall,
+                path: 'departmentmanagement',
+                Component: DepartmentManagement,
             },
             {
-                path: 'user',
-                Component: User,
+                path: 'employeemanagement',
+                Component: EmployeeManagement,
+            },
+            {
+                path: 'attendancemanagement',
+                Component: AttendanceManagement,
+            },
+            {
+                path: 'overtimerequest',
+                Component: OvertimeRequest,
+            },
+            {
+                path: 'leaverequest',
+                Component: LeaveRequest,
+            },
+            {
+                path: 'shiftswaprequest',
+                Component: ShiftSwapRequest,
+            },
+            {
+                path: 'attendancesummary',
+                Component: AttendanceSummary,
             },
             {
                 path: 'other',
                 children: [
                     {
-                        path: 'pageOne',
-                        Component: pageOne
+                        path: 'MyProfile',
+                        Component: MyProfile
                     },
                     {
-                        path: 'pageTwo',
-                        Component: pageTwo
+                        path: 'ChangePassword',
+                        Component: ChangePassword
                     }
                 ]
             }
+
         ]
     },
     {

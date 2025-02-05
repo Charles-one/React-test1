@@ -1,9 +1,9 @@
 import * as React from 'react'
 
 const pageOne = () => {
-    return(
+    return (
         <div>
-            pageOne页面
+            我的信息
         </div>
     )
 }

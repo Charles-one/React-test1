@@ -60,7 +60,7 @@ const CommonAside = ({ collapsed }) => {
       width={200}
       collapsed={collapsed}
     >
-      <h3 className="app-name">{collapsed ? '后台' : '通用后台管理系统'}</h3>
+      <h3 className="app-name">{collapsed ? 'Charles' : '企业员工管理系统'}</h3>
       <Menu
         mode="inline"
         theme="dark"

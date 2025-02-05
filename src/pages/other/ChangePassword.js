@@ -1,9 +1,9 @@
 import * as React from 'react'
 
 const pageTwo = () => {
-    return(
+    return (
         <div>
-            pageTwo页面
+            修改密码
         </div>
     )
 }

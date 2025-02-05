@@ -1,5 +1,5 @@
 .home {
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 .home .user {
     display: flex;
