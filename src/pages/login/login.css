@@ -1,25 +1,56 @@
 .login-container {
-    width: 350px;
-    border: 1px solid #eaeaea;
-    margin: 180px auto;
-    padding: 35px 35px 15px 35px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 0 25px #cac6c6;
-    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    height: 350px;
+    margin: 150px auto;
+    padding: 20px 40px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.login-container .login_title {
-    text-align: center;
-    margin-bottom: 40px;
-    color: #505458;
-    font-size: 20px;
+.login_title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #333;
 }
 
-.login-container .el-input {
-    width: 198px;
+.login-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
-.login-container .login-button {
-    text-align: center;
+.login-button button {
+    width: 200px;
+}
+
+/* 添加背景图样式 */
+body .login-page {
+    background: url('../../assets/images/bg.png') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+
+/* 添加表单项样式 */
+.login-container .ant-form-item {
+    width: 100%;
+}
+
+.login-container .ant-input,
+.login-container .ant-input-password {
+    height: 40px;
+}
+
+.login-container .ant-form-item-label > label {
+    color: #333;
 }
