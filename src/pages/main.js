@@ -1,16 +1,16 @@
-import React from 'react'
+import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Layout } from 'antd'
+import { Layout } from 'antd';
 import CommonTag from '../components/commonTag';
-import CommonHeader from '../components/commonHeader'
+import CommonHeader from '../components/commonHeader';
 import CommonAside from '../components/commonAside';
-import { useSelector } from 'react-redux'
-import { RouterAuth } from '../router/routerAuth'
+import { useSelector } from 'react-redux';
+import { RouterAuth } from '../router/routerAuth';
 
-const { Content } = Layout
+const { Content } = Layout;
 
 const Main = () => {
-  const collapsed = useSelector(state => state.tab.isCollapse)
+  const collapsed = useSelector((state) => state.tab.isCollapse);
 
   return (
     <RouterAuth>
@@ -23,7 +23,7 @@ const Main = () => {
             style={{
               padding: 24,
               margin: 0,
-              minHeight: 280
+              minHeight: 280,
             }}
           >
             <Outlet />
@@ -31,7 +31,7 @@ const Main = () => {
         </Layout>
       </Layout>
     </RouterAuth>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;

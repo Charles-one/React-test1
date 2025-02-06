@@ -1,11 +1,7 @@
-import * as React from 'react'
+import * as React from 'react';
 
 const MyProfile = () => {
-    return (
-        <div>
-            我的信息
-        </div>
-    )
-}
+  return <div>我的信息</div>;
+};
 
-export default MyProfile
+export default MyProfile;

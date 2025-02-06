@@ -1,19 +1,19 @@
-import React from 'react'
+import React from 'react';
 import { Button, Layout, Dropdown, Avatar, Space } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
-import './index.css'
-import { useDispatch } from "react-redux";
-import { collapseMenu } from '../../store/reducers/tab'
-import { useNavigate } from 'react-router-dom'
+import './index.css';
+import { useDispatch } from 'react-redux';
+import { collapseMenu } from '../../store/reducers/tab';
+import { useNavigate } from 'react-router-dom';
 
-const { Header } = Layout
+const { Header } = Layout;
 
 const CommonHeader = ({ collapsed }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const setCollapsed = () => {
-    dispatch(collapseMenu())
-  }
-  const navigate = useNavigate()
+    dispatch(collapseMenu());
+  };
+  const navigate = useNavigate();
   const items = [
     {
       key: '1',
@@ -26,17 +26,17 @@ const CommonHeader = ({ collapsed }) => {
     {
       key: '2',
       label: (
-        <a onClick={() => logout(!collapsed)} target="_blank" rel="noopener noreferrer" >
+        <a onClick={() => logout(!collapsed)} target="_blank" rel="noopener noreferrer">
           退出
         </a>
       ),
-    }
-  ]
+    },
+  ];
   // 登出
   const logout = () => {
-    localStorage.removeItem('token')
-    navigate('/login')
-  }
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
   return (
     <Header className="header-container">
       <Button
@@ -47,18 +47,16 @@ const CommonHeader = ({ collapsed }) => {
           fontSize: '16px',
           width: 64,
           height: 32,
-          backgroundColor: '#fff'
+          backgroundColor: '#fff',
         }}
       />
-      <Dropdown
-        menu={{ items }}
-      >
+      <Dropdown menu={{ items }}>
         <a onClick={(e) => e.preventDefault()}>
-          <Avatar size={36} src={<img src={require("../../assets/images/user.png")} />} />
+          <Avatar size={36} src={<img src={require('../../assets/images/user.png')} />} />
         </a>
       </Dropdown>
     </Header>
-  )
-}
+  );
+};
 
-export default CommonHeader
+export default CommonHeader;

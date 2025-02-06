@@ -1,84 +1,90 @@
-import React, { useState, useEffect } from 'react'
-import { Table, Button, Modal, Form, Input, Select, message, Space, InputNumber } from 'antd'
-import { getEmployeeList, addEmployee, updateEmployee, deleteEmployee, getDepartmentList } from '../../api'
-import { useLocation } from 'react-router-dom'
-import './user.css'
+import React, { useState, useEffect } from 'react';
+import { Table, Button, Modal, Form, Input, Select, message, Space, InputNumber } from 'antd';
+import {
+  getEmployeeList,
+  addEmployee,
+  updateEmployee,
+  deleteEmployee,
+  getDepartmentList,
+} from '../../api';
+import { useLocation } from 'react-router-dom';
+import './user.css';
 
-const { Option } = Select
-const { Search } = Input
+const { Option } = Select;
+const { Search } = Input;
 
 const EmployeeManagement = () => {
-  const [employees, setEmployees] = useState([])
-  const [departments, setDepartments] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false)
-  const [form] = Form.useForm()
-  const [editingEmployee, setEditingEmployee] = useState(null)
-  const location = useLocation()
-  const [searchField, setSearchField] = useState('name')
-  const [searchValue, setSearchValue] = useState('')
-  const [filteredEmployees, setFilteredEmployees] = useState([])
+  const [employees, setEmployees] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [form] = Form.useForm();
+  const [editingEmployee, setEditingEmployee] = useState(null);
+  const location = useLocation();
+  const [searchField, setSearchField] = useState('name');
+  const [searchValue, setSearchValue] = useState('');
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
 
   // 获取员工列表
   const fetchEmployees = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const res = await getEmployeeList()
+      const res = await getEmployeeList();
       if (res.data.code === 20000) {
-        setEmployees(res.data.data.list)
+        setEmployees(res.data.data.list);
       }
     } catch (error) {
-      message.error('获取员工列表失败')
+      message.error('获取员工列表失败');
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   // 获取部门列表
   const fetchDepartments = async () => {
     try {
-      const res = await getDepartmentList()
+      const res = await getDepartmentList();
       if (res.data.code === 20000) {
-        setDepartments(res.data.data.list)
+        setDepartments(res.data.data.list);
       }
     } catch (error) {
-      message.error('获取部门列表失败')
+      message.error('获取部门列表失败');
     }
-  }
+  };
 
   useEffect(() => {
-    fetchEmployees()
-    fetchDepartments()
-  }, [location])
+    fetchEmployees();
+    fetchDepartments();
+  }, [location]);
 
   // 处理搜索
   const handleSearch = (value) => {
     if (!value) {
-      setFilteredEmployees(employees)
-      return
+      setFilteredEmployees(employees);
+      return;
     }
 
-    const filtered = employees.filter(employee => {
-      const fieldValue = employee[searchField]
+    const filtered = employees.filter((employee) => {
+      const fieldValue = employee[searchField];
       if (typeof fieldValue === 'string') {
-        return fieldValue.toLowerCase().includes(value.toLowerCase())
+        return fieldValue.toLowerCase().includes(value.toLowerCase());
       } else if (typeof fieldValue === 'number') {
-        return fieldValue.toString().includes(value)
+        return fieldValue.toString().includes(value);
       }
-      return false
-    })
-    setFilteredEmployees(filtered)
-  }
+      return false;
+    });
+    setFilteredEmployees(filtered);
+  };
 
   // 当员工数据更新时，更新过滤后的列表
   useEffect(() => {
-    setFilteredEmployees(employees)
-  }, [employees])
+    setFilteredEmployees(employees);
+  }, [employees]);
 
   // 在组件内添加一个函数来检查部门状态
   const getDepartmentStatus = (departmentId) => {
-    const department = departments.find(dept => dept.id === departmentId)
-    return department?.status
-  }
+    const department = departments.find((dept) => dept.id === departmentId);
+    return department?.status;
+  };
 
   // 修改表格列配置
   const columns = [
@@ -107,15 +113,17 @@ const EmployeeManagement = () => {
       dataIndex: 'departmentName',
       key: 'departmentName',
       render: (text, record) => {
-        const departmentStatus = getDepartmentStatus(record.departmentId)
+        const departmentStatus = getDepartmentStatus(record.departmentId);
         return (
-          <span style={{
-            color: departmentStatus === '停用' ? '#ff4d4f' : 'inherit'
-          }}>
+          <span
+            style={{
+              color: departmentStatus === '停用' ? '#ff4d4f' : 'inherit',
+            }}
+          >
             {text}
           </span>
-        )
-      }
+        );
+      },
     },
     {
       title: '职位',
@@ -146,64 +154,63 @@ const EmployeeManagement = () => {
         </Space>
       ),
     },
-  ]
+  ];
 
   // 处理添加/编辑
   const handleSubmit = async () => {
     try {
-      const values = await form.validateFields()
+      const values = await form.validateFields();
       if (editingEmployee) {
-        await updateEmployee({ ...values, id: editingEmployee.id })
-        message.success('更新成功')
+        await updateEmployee({ ...values, id: editingEmployee.id });
+        message.success('更新成功');
       } else {
-        await addEmployee(values)
-        message.success('添加成功')
+        await addEmployee(values);
+        message.success('添加成功');
       }
-      setModalVisible(false)
-      form.resetFields()
-      await fetchEmployees()
-      await fetchDepartments()
+      setModalVisible(false);
+      form.resetFields();
+      await fetchEmployees();
+      await fetchDepartments();
     } catch (error) {
-      message.error('操作失败')
+      message.error('操作失败');
     }
-  }
+  };
 
   // 编辑员工
   const handleEdit = (employee) => {
-    setEditingEmployee(employee)
-    form.setFieldsValue(employee)
-    setModalVisible(true)
-  }
+    setEditingEmployee(employee);
+    form.setFieldsValue(employee);
+    setModalVisible(true);
+  };
 
   // 删除员工
   const handleDelete = async (employee) => {
     try {
-      await deleteEmployee({ id: employee.id })
-      message.success('删除成功')
-      await fetchEmployees()
-      await fetchDepartments()
+      await deleteEmployee({ id: employee.id });
+      message.success('删除成功');
+      await fetchEmployees();
+      await fetchDepartments();
     } catch (error) {
-      message.error('删除失败')
+      message.error('删除失败');
     }
-  }
+  };
 
   return (
     <div className="employee-management">
       <div className="header">
         <Space size="middle" style={{ marginBottom: 16 }}>
-          <Button type="primary" onClick={() => {
-            setEditingEmployee(null)
-            form.resetFields()
-            setModalVisible(true)
-          }}>
+          <Button
+            type="primary"
+            onClick={() => {
+              setEditingEmployee(null);
+              form.resetFields();
+              setModalVisible(true);
+            }}
+          >
             添加员工
           </Button>
           <Space>
-            <Select
-              value={searchField}
-              onChange={setSearchField}
-              style={{ width: 120 }}
-            >
+            <Select value={searchField} onChange={setSearchField} style={{ width: 120 }}>
               <Option value="name">姓名</Option>
               <Option value="phone">手机号</Option>
               <Option value="departmentName">所属部门</Option>
@@ -215,9 +222,9 @@ const EmployeeManagement = () => {
               allowClear
               onSearch={handleSearch}
               onChange={(e) => {
-                setSearchValue(e.target.value)
+                setSearchValue(e.target.value);
                 if (!e.target.value) {
-                  handleSearch('')
+                  handleSearch('');
                 }
               }}
               style={{ width: 200 }}
@@ -227,45 +234,25 @@ const EmployeeManagement = () => {
         </Space>
       </div>
 
-      <Table
-        columns={columns}
-        dataSource={filteredEmployees}
-        loading={loading}
-        rowKey="id"
-      />
+      <Table columns={columns} dataSource={filteredEmployees} loading={loading} rowKey="id" />
 
       <Modal
         title={editingEmployee ? '编辑员工' : '添加员工'}
         open={modalVisible}
         onOk={handleSubmit}
         onCancel={() => {
-          setModalVisible(false)
-          form.resetFields()
+          setModalVisible(false);
+          form.resetFields();
         }}
       >
-        <Form
-          form={form}
-          layout="vertical"
-        >
-          <Form.Item
-            name="name"
-            label="姓名"
-            rules={[{ required: true, message: '请输入姓名' }]}
-          >
+        <Form form={form} layout="vertical">
+          <Form.Item name="name" label="姓名" rules={[{ required: true, message: '请输入姓名' }]}>
             <Input />
           </Form.Item>
-          <Form.Item
-            name="age"
-            label="年龄"
-            rules={[{ required: true, message: '请输入年龄' }]}
-          >
+          <Form.Item name="age" label="年龄" rules={[{ required: true, message: '请输入年龄' }]}>
             <InputNumber min={18} max={100} />
           </Form.Item>
-          <Form.Item
-            name="gender"
-            label="性别"
-            rules={[{ required: true, message: '请选择性别' }]}
-          >
+          <Form.Item name="gender" label="性别" rules={[{ required: true, message: '请选择性别' }]}>
             <Select>
               <Option value="男">男</Option>
               <Option value="女">女</Option>
@@ -284,8 +271,10 @@ const EmployeeManagement = () => {
             rules={[{ required: true, message: '请选择所属部门' }]}
           >
             <Select>
-              {departments.map(dept => (
-                <Option key={dept.id} value={dept.id}>{dept.name}</Option>
+              {departments.map((dept) => (
+                <Option key={dept.id} value={dept.id}>
+                  {dept.name}
+                </Option>
               ))}
             </Select>
           </Form.Item>
@@ -297,10 +286,7 @@ const EmployeeManagement = () => {
             <Input />
           </Form.Item>
           {editingEmployee && (
-            <Form.Item
-              name="status"
-              label="状态"
-            >
+            <Form.Item name="status" label="状态">
               <Select>
                 <Option value="在职">在职</Option>
                 <Option value="离职">离职</Option>
@@ -311,7 +297,7 @@ const EmployeeManagement = () => {
         </Form>
       </Modal>
     </div>
-  )
-}
+  );
+};
 
-export default EmployeeManagement
+export default EmployeeManagement;
