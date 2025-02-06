@@ -4,8 +4,10 @@ import './index.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { closeTab, setCurrentMenu } from '../../store/reducers/tab';
+import { useTranslation } from 'react-i18next';
 
 const CommonTag = () => {
+  const { t } = useTranslation();
   const tabsList = useSelector((state) => state.tab.tabsList);
   const currentMenu = useSelector((state) => state.tab.currentMenu);
   const dispatch = useDispatch();
@@ -43,11 +45,11 @@ const CommonTag = () => {
   const setTag = (flag, item, index) => {
     return flag ? (
       <Tag color="#55acee" closeIcon onClose={() => handleClose(item, index)} key={item.name}>
-        {item.label}
+        {t(item.label)}
       </Tag>
     ) : (
       <Tag onClick={() => handleChange(item)} key={item.name}>
-        {item.label}
+        {t(item.label)}
       </Tag>
     );
   };
