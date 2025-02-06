@@ -4,12 +4,21 @@ import { UserOutlined } from '@ant-design/icons'
 import userAvatar from '../../assets/images/user.png' // 导入头像图片
 
 const MyProfile = () => {
-    const [userInfo, setUserInfo] = useState({
-        username: 'admin',
-        password: '123456',
-        nickname: 'Charles',
-        email: 'cwcharles0323@163.com'
-    })
+    // 从 localStorage 获取用户信息，如果没有则使用默认值
+    const getInitialUserInfo = () => {
+        const storedUserInfo = localStorage.getItem('userInfo')
+        if (storedUserInfo) {
+            return JSON.parse(storedUserInfo)
+        }
+        return {
+            username: 'admin',
+            password: '123456',
+            nickname: 'Charles',
+            email: 'cwcharles0323@163.com'
+        }
+    }
+
+    const [userInfo, setUserInfo] = useState(getInitialUserInfo)
     const [modalVisible, setModalVisible] = useState(false)
     const [form] = Form.useForm()
 
@@ -17,10 +26,13 @@ const MyProfile = () => {
     const handleUpdate = async () => {
         try {
             const values = await form.validateFields()
-            setUserInfo(prev => ({
-                ...prev,
+            const newUserInfo = {
+                ...userInfo,
                 ...values
-            }))
+            }
+            // 更新 localStorage
+            localStorage.setItem('userInfo', JSON.stringify(newUserInfo))
+            setUserInfo(newUserInfo)
             message.success('更新成功')
             setModalVisible(false)
         } catch (error) {
@@ -31,11 +43,23 @@ const MyProfile = () => {
     // 打开编辑模态框
     const handleEdit = () => {
         form.setFieldsValue({
+            username: userInfo.username,
             nickname: userInfo.nickname,
             email: userInfo.email
         })
         setModalVisible(true)
     }
+
+    // 监听 localStorage 变化
+    useEffect(() => {
+        const handleStorageChange = () => {
+            setUserInfo(getInitialUserInfo())
+        }
+        window.addEventListener('storage', handleStorageChange)
+        return () => {
+            window.removeEventListener('storage', handleStorageChange)
+        }
+    }, [])
 
     return (
         <div style={{ padding: '20px' }}>
@@ -83,6 +107,13 @@ const MyProfile = () => {
                     form={form}
                     layout="vertical"
                 >
+                    <Form.Item
+                        name="username"
+                        label="用户名"
+                        rules={[{ required: true, message: '请输入用户名' }]}
+                    >
+                        <Input />
+                    </Form.Item>
                     <Form.Item
                         name="nickname"
                         label="昵称"

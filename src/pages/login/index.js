@@ -9,18 +9,40 @@ const Login = () => {
   if (localStorage.getItem('token')) {
     return <Navigate to="/home" replace />
   }
-  const handleSubmit = (val) => {
-    if (!val.password || !val.username) {
-      return message.open({
-        type: 'warning',
-        content: '请输入用户名和密码',
-      });
+
+  // 获取用户信息
+  const getUserInfo = () => {
+    const storedUserInfo = localStorage.getItem('userInfo')
+    if (storedUserInfo) {
+      return JSON.parse(storedUserInfo)
     }
-    getMenu(val).then(({ data }) => {
+    return {
+      username: 'admin',
+      password: '123456',
+      nickname: 'Charles',
+      email: 'cwcharles0323@163.com'
+    }
+  }
+
+  const handleSubmit = (values) => {
+    if (!values.password || !values.username) {
+      return message.warning('请输入用户名和密码')
+    }
+
+    // 验证用户名和密码
+    const userInfo = getUserInfo()
+    if (values.username !== userInfo.username || values.password !== userInfo.password) {
+      return message.error('用户名或密码错误')
+    }
+
+    // 调用登录接口
+    getMenu(values).then(({ data }) => {
       localStorage.setItem('token', data.data.token)
+      message.success('登录成功')
       navigate('/home')
     })
   }
+
   return (
     <Form
       className="login-container"
@@ -30,14 +52,16 @@ const Login = () => {
       <Form.Item
         label="账号"
         name="username"
+        rules={[{ required: true, message: '请输入账号' }]}
       >
         <Input placeholder="请输入账号" />
       </Form.Item>
       <Form.Item
         label="密码"
         name="password"
+        rules={[{ required: true, message: '请输入密码' }]}
       >
-        <Input.Password placeholder="请输入账号" />
+        <Input.Password placeholder="请输入密码" />
       </Form.Item>
       <Form.Item className="login-button">
         <Button type="primary" htmlType="submit">登录</Button>

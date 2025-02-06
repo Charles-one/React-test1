@@ -6,12 +6,27 @@ const ChangePassword = () => {
     const [form] = Form.useForm()
     const [loading, setLoading] = useState(false)
 
+    // 获取当前用户信息
+    const getUserInfo = () => {
+        const storedUserInfo = localStorage.getItem('userInfo')
+        if (storedUserInfo) {
+            return JSON.parse(storedUserInfo)
+        }
+        return {
+            username: 'admin',
+            password: '123456',
+            nickname: 'Charles',
+            email: 'cwcharles0323@163.com'
+        }
+    }
+
     // 处理密码修改
     const handleSubmit = async (values) => {
         setLoading(true)
         try {
+            const userInfo = getUserInfo()
             // 验证原密码是否正确
-            if (values.oldPassword !== '123456') {
+            if (values.oldPassword !== userInfo.password) {
                 message.error('原密码不正确')
                 return
             }
@@ -22,12 +37,15 @@ const ChangePassword = () => {
                 return
             }
 
-            // 模拟密码更新
-            setTimeout(() => {
-                message.success('密码修改成功')
-                form.resetFields()
-            }, 1000)
+            // 更新密码
+            const newUserInfo = {
+                ...userInfo,
+                password: values.newPassword
+            }
+            localStorage.setItem('userInfo', JSON.stringify(newUserInfo))
 
+            message.success('密码修改成功')
+            form.resetFields()
         } catch (error) {
             message.error('修改失败')
         } finally {
