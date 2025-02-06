@@ -9,6 +9,7 @@ import leaveApi from './mockServeData/leave'
 import shiftSwapApi from './mockServeData/shiftswap'
 import summaryApi from './mockServeData/summary'
 
+// 定义各种模拟接口
 Mock.mock('/home/getData', homeApi.getStatisticalData)
 Mock.mock(/permission\/getMenu/, 'post', permissionApi.getMenu)
 
