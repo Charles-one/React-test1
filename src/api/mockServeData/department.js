@@ -37,9 +37,28 @@ const saveToStorage = () => {
     localStorage.setItem('departmentNextId', nextId.toString())
 }
 
+// 更新部门人数
+const updateDepartmentCount = () => {
+    const employeeList = JSON.parse(localStorage.getItem('employeeList')) || []
+    // 计算每个部门的人数
+    const countMap = employeeList.reduce((acc, emp) => {
+        acc[emp.departmentId] = (acc[emp.departmentId] || 0) + 1
+        return acc
+    }, {})
+
+    // 更新部门列表的人数
+    departmentList.forEach(dept => {
+        dept.memberCount = countMap[dept.id] || 0
+    })
+
+    saveToStorage()
+}
+
 export default {
     // 获取部门列表
     getDepartmentList: () => {
+        // 每次获取部门列表时更新人数
+        updateDepartmentCount()
         return {
             code: 20000,
             data: {

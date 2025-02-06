@@ -1,0 +1,11 @@
+.employee-management {
+    padding: 20px;
+}
+
+.employee-management .header {
+    margin-bottom: 20px;
+}
+
+.employee-management .ant-table {
+    background: #fff;
+}

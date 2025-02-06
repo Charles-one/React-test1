@@ -15,37 +15,6 @@ export const getData = () => {
     })
 }
 
-export const getUser = (params) => {
-    return axios.request({
-        url: '/user/getUser',
-        method: 'get',
-        params
-    })
-}
-
-export const addUser = (data) => {
-    return axios.request({
-        url: '/user/add',
-        method: 'post',
-        data
-    })
-}
-
-export const editUser = (data) => {
-    return axios.request({
-        url: '/user/edit',
-        method: 'post',
-        data
-    })
-}
-
-export const deleteUser = (data) => {
-    return axios.request({
-        url: '/user/del',
-        method: 'post',
-        data
-    })
-}
 
 // 部门管理相关接口
 export const getDepartmentList = () => {
@@ -74,6 +43,38 @@ export const updateDepartment = (data) => {
 export const deleteDepartment = (data) => {
     return axios.request({
         url: '/department/delete',
+        method: 'post',
+        data
+    })
+}
+
+// 员工管理相关接口
+export const getEmployeeList = () => {
+    return axios.request({
+        url: '/employee/list',
+        method: 'get'
+    })
+}
+
+export const addEmployee = (data) => {
+    return axios.request({
+        url: '/employee/add',
+        method: 'post',
+        data
+    })
+}
+
+export const updateEmployee = (data) => {
+    return axios.request({
+        url: '/employee/update',
+        method: 'post',
+        data
+    })
+}
+
+export const deleteEmployee = (data) => {
+    return axios.request({
+        url: '/employee/delete',
         method: 'post',
         data
     })

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Button, Modal, Form, Input, Select, message, Space } from 'antd'
 import { getDepartmentList, addDepartment, updateDepartment, deleteDepartment } from '../../api'
+import { useLocation } from 'react-router-dom'
 import './DepartmentManagement.css'
 
 const { Option } = Select
@@ -11,6 +12,7 @@ const DepartmentManagement = () => {
     const [modalVisible, setModalVisible] = useState(false)
     const [form] = Form.useForm()
     const [editingDepartment, setEditingDepartment] = useState(null)
+    const location = useLocation()
 
     // 获取部门列表
     const fetchDepartments = async () => {
@@ -28,7 +30,7 @@ const DepartmentManagement = () => {
 
     useEffect(() => {
         fetchDepartments()
-    }, [])
+    }, [location])
 
     // 表格列配置
     const columns = [
