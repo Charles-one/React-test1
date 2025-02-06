@@ -48,7 +48,28 @@ body .login-page {
 
 .login-container .ant-input,
 .login-container .ant-input-password {
-    height: 40px;
+    height: 32px;
+    line-height: 32px;
+}
+
+/* 专门处理密码输入框 */
+.login-container .ant-input-password .ant-input {
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    top: -1px;
+}
+
+.login-container .ant-input-affix-wrapper {
+    padding: 0 11px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+}
+
+/* 确保密码框内的文字垂直居中 */
+.login-container .ant-input-affix-wrapper > input.ant-input {
+    padding: 0;
 }
 
 .login-container .ant-form-item-label > label {
