@@ -145,3 +145,36 @@ export const deleteOvertime = (data) => {
         data
     })
 }
+
+// 请假申请相关接口
+export const getLeaveList = (data) => {
+    return axios.request({
+        url: '/leave/list',
+        method: 'post',
+        data
+    })
+}
+
+export const addLeave = (data) => {
+    return axios.request({
+        url: '/leave/add',
+        method: 'post',
+        data
+    })
+}
+
+export const updateLeave = (data) => {
+    return axios.request({
+        url: '/leave/update',
+        method: 'post',
+        data
+    })
+}
+
+export const deleteLeave = (data) => {
+    return axios.request({
+        url: '/leave/delete',
+        method: 'post',
+        data
+    })
+}

@@ -5,7 +5,7 @@ const initialAttendanceList = [
     {
         id: 1,
         employeeId: 1,
-        employeeName: '张小明',
+        employeeName: 'Charles',
         departmentName: '技术部',
         date: '2024-03-15',
         checkIn: '09:00:00',
@@ -16,7 +16,7 @@ const initialAttendanceList = [
     {
         id: 2,
         employeeId: 2,
-        employeeName: '李小红',
+        employeeName: 'Charles1',
         departmentName: '人事部',
         date: '2024-03-15',
         checkIn: '09:15:00',

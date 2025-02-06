@@ -1,0 +1,15 @@
+.leave-request {
+    padding: 20px;
+}
+
+.leave-request .header {
+    margin-bottom: 20px;
+}
+
+.leave-request .ant-table {
+    background: #fff;
+}
+
+.leave-request .ant-form-inline {
+    margin-bottom: 16px;
+}

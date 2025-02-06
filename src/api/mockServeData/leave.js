@@ -1,37 +1,38 @@
 import Mock from 'mockjs'
 
-// 初始加班申请数据
-const initialOvertimeList = [
+// 初始请假申请数据
+const initialLeaveList = [
     {
         id: 1,
         employeeId: 1,
         employeeName: 'Charles',
         departmentName: '技术部',
-        startTime: '2024-03-15 18:00:00',
-        endTime: '2024-03-15 21:00:00',
-        duration: 3,
-        reason: '项目紧急，需要加班处理',
+        startTime: '2024-03-15 09:00:00',
+        endTime: '2024-03-16 18:00:00',
+        duration: 2,
+        type: '年假',
+        reason: '个人事务',
         status: '待审批',
         approver: '张三',
-        createTime: '2024-03-15 17:30:00',
+        createTime: '2024-03-14 17:30:00',
         approveTime: null,
         approveRemark: null
     }
 ]
 
-let overtimeList = JSON.parse(localStorage.getItem('overtimeList')) || initialOvertimeList
-let nextId = parseInt(localStorage.getItem('overtimeNextId')) || overtimeList.length + 1
+let leaveList = JSON.parse(localStorage.getItem('leaveList')) || initialLeaveList
+let nextId = parseInt(localStorage.getItem('leaveNextId')) || leaveList.length + 1
 
 const saveToStorage = () => {
-    localStorage.setItem('overtimeList', JSON.stringify(overtimeList))
-    localStorage.setItem('overtimeNextId', nextId.toString())
+    localStorage.setItem('leaveList', JSON.stringify(leaveList))
+    localStorage.setItem('leaveNextId', nextId.toString())
 }
 
 export default {
-    // 获取加班申请列表
-    getOvertimeList: config => {
+    // 获取请假申请列表
+    getLeaveList: config => {
         const { employeeId, status, startDate, endDate } = config.body ? JSON.parse(config.body) : {}
-        let filteredList = [...overtimeList]
+        let filteredList = [...leaveList]
 
         if (employeeId) {
             filteredList = filteredList.filter(item => item.employeeId === employeeId)
@@ -55,10 +56,10 @@ export default {
         }
     },
 
-    // 添加加班申请
-    addOvertime: config => {
-        const { employeeId, employeeName, departmentName, startTime, endTime, duration, reason } = JSON.parse(config.body)
-        const overtime = {
+    // 添加请假申请
+    addLeave: config => {
+        const { employeeId, employeeName, departmentName, startTime, endTime, duration, type, reason } = JSON.parse(config.body)
+        const leave = {
             id: nextId++,
             employeeId,
             employeeName,
@@ -66,6 +67,7 @@ export default {
             startTime,
             endTime,
             duration,
+            type,
             reason,
             status: '待审批',
             approver: '张三', // 这里可以根据实际情况设置审批人
@@ -73,7 +75,7 @@ export default {
             approveTime: null,
             approveRemark: null
         }
-        overtimeList.push(overtime)
+        leaveList.push(leave)
         saveToStorage()
         return {
             code: 20000,
@@ -83,13 +85,13 @@ export default {
         }
     },
 
-    // 更新加班申请（审批）
-    updateOvertime: config => {
+    // 更新请假申请（审批）
+    updateLeave: config => {
         const { id, status, approveRemark } = JSON.parse(config.body)
-        const index = overtimeList.findIndex(item => item.id === id)
+        const index = leaveList.findIndex(item => item.id === id)
         if (index > -1) {
-            overtimeList[index] = {
-                ...overtimeList[index],
+            leaveList[index] = {
+                ...leaveList[index],
                 status,
                 approveRemark,
                 approveTime: new Date().toLocaleString()
@@ -104,12 +106,12 @@ export default {
         }
     },
 
-    // 删除加班申请
-    deleteOvertime: config => {
+    // 删除请假申请
+    deleteLeave: config => {
         const { id } = JSON.parse(config.body)
-        const index = overtimeList.findIndex(item => item.id === id)
+        const index = leaveList.findIndex(item => item.id === id)
         if (index > -1) {
-            overtimeList.splice(index, 1)
+            leaveList.splice(index, 1)
             saveToStorage()
         }
         return {

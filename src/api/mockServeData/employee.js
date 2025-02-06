@@ -4,7 +4,7 @@ import Mock from 'mockjs'
 const initialEmployeeList = [
     {
         id: 1,
-        name: '张小明',
+        name: 'Charles',
         age: 28,
         gender: '男',
         phone: '13812345678',
@@ -16,7 +16,7 @@ const initialEmployeeList = [
     },
     {
         id: 2,
-        name: '李小红',
+        name: 'Charles1',
         age: 26,
         gender: '女',
         phone: '13912345678',
