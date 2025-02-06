@@ -1,11 +1,11 @@
 import * as React from 'react'
-
-const Mall = () => {
-    return(
+import './DepartmentManagement.css'
+const DepartmentManagement = () => {
+    return (
         <div>
             Mall页面
         </div>
     )
 }
 
-export default Mall
+export default DepartmentManagement
