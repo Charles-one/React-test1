@@ -1,10 +1,10 @@
 import Mock from 'mockjs';
+
 export default {
   getMenu: (config) => {
     const { username, password } = JSON.parse(config.body);
-    // 先判断用户是否存在
-    // 判断账号和密码是否对应
-    if (username === 'admin' && password === 'admin') {
+    // 验证用户名和密码
+    if (username === 'admin' && password === '123456') {
       return {
         code: 20000,
         data: {
@@ -12,78 +12,91 @@ export default {
             {
               path: '/home',
               name: 'home',
-              label: '首页',
-              icon: 's-home',
+              label: 'menu.home',
+              icon: 'HomeOutlined',
               url: 'home/index',
             },
             {
-              path: '/mall',
-              name: 'mall',
-              label: '商品管理',
-              icon: 'video-play',
-              url: 'mall/index',
+              path: '/departmentmanagement',
+              name: 'departmentmanagement',
+              label: 'menu.departmentManagement',
+              icon: 'ShopOutlined',
+              url: 'DepartmentManagement/index',
             },
             {
-              path: '/user',
-              name: 'user',
-              label: '用户管理',
-              icon: 'user',
-              url: 'User/index',
+              path: '/employeemanagement',
+              name: 'employeemanagement',
+              label: 'menu.employeeManagement',
+              icon: 'UserOutlined',
+              url: 'EmployeeManagement/index',
             },
             {
-              label: '其他',
-              icon: 'location',
+              path: '/attendancemanagement',
+              name: 'attendancemanagement',
+              label: 'menu.attendanceManagement',
+              icon: 'AppstoreOutlined',
+              url: 'AttendanceManagement/index',
+            },
+            {
+              path: '/overtimerequest',
+              name: 'overtimerequest',
+              label: 'menu.overtimeRequest',
+              icon: 'MedicineBoxFilled',
+              url: 'OvertimeRequest/index',
+            },
+            {
+              path: '/leaverequest',
+              name: 'leaverequest',
+              label: 'menu.leaveRequest',
+              icon: 'BellFilled',
+              url: 'LeaveRequest/index',
+            },
+            {
+              path: '/shiftswaprequest',
+              name: 'shiftswaprequest',
+              label: 'menu.shiftSwapRequest',
+              icon: 'AuditOutlined',
+              url: 'ShiftSwapRequest/index',
+            },
+            {
+              path: '/attendancesummary',
+              name: 'attendancesummary',
+              label: 'menu.attendanceSummary',
+              icon: 'SignalFilled',
+              url: 'AttendanceSummary/index',
+            },
+            {
+              path: '/other',
+              name: 'other',
+              label: 'menu.other',
+              icon: 'SettingOutlined',
               children: [
                 {
-                  path: '/page1',
-                  name: 'page1',
-                  label: '页面1',
-                  icon: 'setting',
-                  url: 'other/pageOne.vue',
+                  path: '/other/myprofile',
+                  name: 'myprofile',
+                  label: 'menu.myProfile',
+                  icon: 'SettingOutlined',
+                  url: 'other/MyProfile',
                 },
                 {
-                  path: '/page2',
-                  name: 'page2',
-                  label: '页面2',
-                  icon: 'setting',
-                  url: 'other/pageTwo.vue',
+                  path: '/other/changepassword',
+                  name: 'changepassword',
+                  label: 'menu.changePassword',
+                  icon: 'UnlockOutlined',
+                  url: 'other/ChangePassword',
                 },
               ],
             },
           ],
           token: Mock.Random.guid(),
-          message: '获取成功',
-        },
-      };
-    } else if (username === 'xiaoxiao' && password === 'xiaoxiao') {
-      return {
-        code: 20000,
-        data: {
-          menu: [
-            {
-              path: '/',
-              name: 'home',
-              label: '首页',
-              icon: 's-home',
-              url: 'home/index',
-            },
-            {
-              path: '/video',
-              name: 'video',
-              label: '商品管理',
-              icon: 'video-play',
-              url: 'mall/index',
-            },
-          ],
-          token: Mock.Random.guid(),
-          message: '获取成功',
+          message: '登录成功',
         },
       };
     } else {
       return {
         code: -999,
         data: {
-          message: '密码错误',
+          message: '用户名或密码错误',
         },
       };
     }

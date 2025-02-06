@@ -1,0 +1,38 @@
+.language-switch {
+  background-color: transparent !important;
+}
+
+.language-switch .ant-select-selector {
+  background-color: #001529 !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.language-switch .ant-select-arrow {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+.language-switch:hover .ant-select-selector {
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.language-switch .ant-select-focused .ant-select-selector {
+  border-color: #1890ff !important;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2) !important;
+}
+
+/* 下拉菜单样式 */
+.language-switch.ant-select-dropdown {
+  background-color: #001529 !important;
+}
+
+.language-switch .ant-select-item {
+  color: rgba(255, 255, 255, 0.65) !important;
+  background-color: transparent !important;
+}
+
+.language-switch .ant-select-item-option-active,
+.language-switch .ant-select-item-option-selected {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: #fff !important;
+} 
