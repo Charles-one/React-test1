@@ -7,13 +7,13 @@ const initialOvertimeList = [
         employeeId: 1,
         employeeName: 'Charles',
         departmentName: '技术部',
-        startTime: '2024-03-15 18:00:00',
-        endTime: '2024-03-15 21:00:00',
+        startTime: '2025-01-01 18:00:00',
+        endTime: '2025-01-01 21:00:00',
         duration: 3,
         reason: '项目紧急，需要加班处理',
         status: '待审批',
         approver: '张三',
-        createTime: '2024-03-15 17:30:00',
+        createTime: '2025-01-01 17:30:00',
         approveTime: null,
         approveRemark: null
     }

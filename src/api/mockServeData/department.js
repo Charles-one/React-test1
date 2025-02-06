@@ -3,25 +3,25 @@ const initialDepartmentList = [
     {
         id: 1,
         name: '技术部',
-        manager: '张三',
+        manager: 'Charles',
         memberCount: 1,  // 初始值设为0，后面会根据员工数据更新
-        createTime: '2024-03-15 09:00:00',
+        createTime: '2025-01-01 09:00:00',
         status: '正常'
     },
     {
         id: 2,
         name: '人事部',
-        manager: '李四',
+        manager: 'Charles',
         memberCount: 1,
-        createTime: '2024-03-15 09:00:00',
+        createTime: '2025-01-01 09:00:00',
         status: '正常'
     },
     {
         id: 3,
         name: '市场部',
-        manager: '王五',
+        manager: 'Charles',
         memberCount: 0,
-        createTime: '2024-03-15 09:00:00',
+        createTime: '2025-01-01 09:00:00',
         status: '正常'
     }
 ]

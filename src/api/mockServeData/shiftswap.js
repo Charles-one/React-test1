@@ -7,14 +7,14 @@ const initialShiftSwapList = [
         employeeId: 1,
         employeeName: 'Charles',
         departmentName: '技术部',
-        startTime: '2024-03-15 09:00:00',
-        endTime: '2024-03-16 18:00:00',
+        startTime: '2025-01-01 09:00:00',
+        endTime: '2025-01-02 18:00:00',
         duration: 2,
         reason: '加班调休',
-        overtimeDate: '2024-03-14',  // 关联的加班日期
+        overtimeDate: '2025-01-01',
         status: '待审批',
         approver: '张三',
-        createTime: '2024-03-14 17:30:00',
+        createTime: '2025-01-01 17:30:00',
         approveTime: null,
         approveRemark: null
     }

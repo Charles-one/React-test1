@@ -12,7 +12,7 @@ const initialEmployeeList = [
         departmentName: '技术部', // 部门名称
         position: '开发工程师',
         status: '在职',
-        createTime: '2024-03-15 09:00:00'
+        createTime: '2025-01-01 09:00:00'
     },
     {
         id: 2,
@@ -24,7 +24,7 @@ const initialEmployeeList = [
         departmentName: '人事部',
         position: 'HR专员',
         status: '在职',
-        createTime: '2024-03-15 09:00:00'
+        createTime: '2025-01-01 09:00:00'
     }
 ]
 
