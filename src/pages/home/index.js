@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons'
 import "./home.css"
 import MyEcharts from '../../components/Echarts'
-import { getEmployeeList, getAttendanceList, getDepartmentList } from '../../api'
+import { getEmployeeList, getAttendanceList, getDepartmentList, getLeaveList } from '../../api'
 import dayjs from 'dayjs'
 
 const Home = () => {
@@ -16,7 +16,7 @@ const Home = () => {
     totalEmployees: 0,
     onDutyToday: 0,
     lateToday: 0,
-    leaveToday: 0
+    absentToday: 0
   })
   const [echartData, setEchartData] = useState({})
   const [currentTime, setCurrentTime] = useState(dayjs().format('YYYY-MM-DD HH:mm:ss'))
@@ -24,7 +24,12 @@ const Home = () => {
   // 更新实时时间
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentTime(dayjs().format('YYYY-MM-DD HH:mm:ss'))
+      const now = dayjs()
+      setCurrentTime(now.format('YYYY-MM-DD HH:mm:ss'))
+      // 如果时间跨天了，重新获取统计数据
+      if (now.format('HH:mm:ss') === '00:00:00') {
+        fetchStatistics()
+      }
     }, 1000)
 
     return () => clearInterval(timer)
@@ -38,20 +43,33 @@ const Home = () => {
       const totalEmployees = empRes.data.data.list.length
 
       // 获取今日考勤数据
-      const today = new Date().toISOString().split('T')[0]
+      const today = dayjs().format('YYYY-MM-DD')
       const attRes = await getAttendanceList({ date: today })
       const todayAttendance = attRes.data.data.list
+
+      // 获取今日请假数据
+      const leaveRes = await getLeaveList({})
+      const todayLeaves = leaveRes.data.data.list.filter(leave => {
+        const startDate = dayjs(leave.startTime)
+        const endDate = dayjs(leave.endTime)
+        const currentDate = dayjs()
+        return (
+          leave.status === '已通过' &&
+          currentDate.isAfter(startDate.subtract(1, 'day')) &&
+          currentDate.isBefore(endDate.add(1, 'day'))
+        )
+      })
 
       // 计算今日考勤统计
       const onDutyToday = todayAttendance.filter(a => a.status === '正常').length
       const lateToday = todayAttendance.filter(a => a.status === '迟到').length
-      const leaveToday = totalEmployees - todayAttendance.length
+      const absentToday = todayAttendance.filter(a => a.status === '缺勤').length + todayLeaves.length
 
       setStatistics({
         totalEmployees,
         onDutyToday,
         lateToday,
-        leaveToday
+        absentToday
       })
 
       // 获取部门数据用于图表展示
@@ -70,11 +88,16 @@ const Home = () => {
           }]
         },
         attendance: {
-          xData: ['正常', '迟到', '早退', '缺勤'],
+          xData: ['正常', '迟到', '请假', '缺勤'],
           series: [{
             name: '考勤状况',
             type: 'bar',
-            data: [onDutyToday, lateToday, 0, leaveToday]
+            data: [
+              onDutyToday,
+              lateToday,
+              todayLeaves.length,
+              absentToday - todayLeaves.length // 实际缺勤人数（不包括请假）
+            ]
           }]
         }
       })
@@ -109,7 +132,7 @@ const Home = () => {
     },
     {
       title: "今日请假/缺勤",
-      value: statistics.leaveToday,
+      value: statistics.absentToday,
       icon: <WarningOutlined />,
       color: "#ff4d4f"
     }
