@@ -211,3 +211,12 @@ export const deleteShiftSwap = (data) => {
         data
     })
 }
+
+// 考勤汇总相关接口
+export const getAttendanceSummary = (data) => {
+    return axios.request({
+        url: '/summary/list',
+        method: 'post',
+        data
+    })
+}

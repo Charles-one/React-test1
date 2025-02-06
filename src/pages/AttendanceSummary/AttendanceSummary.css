@@ -1,0 +1,21 @@
+.attendance-summary {
+    padding: 20px;
+}
+
+.attendance-summary .statistics-cards {
+    margin-bottom: 24px;
+}
+
+.attendance-summary .search-form {
+    margin-bottom: 16px;
+    padding: 24px;
+    background: #fff;
+}
+
+.attendance-summary .ant-table {
+    background: #fff;
+}
+
+.attendance-summary .ant-card {
+    border-radius: 4px;
+}
