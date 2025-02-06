@@ -9,6 +9,7 @@ import {
 import "./home.css"
 import MyEcharts from '../../components/Echarts'
 import { getEmployeeList, getAttendanceList, getDepartmentList } from '../../api'
+import dayjs from 'dayjs'
 
 const Home = () => {
   const [statistics, setStatistics] = useState({
@@ -18,6 +19,16 @@ const Home = () => {
     leaveToday: 0
   })
   const [echartData, setEchartData] = useState({})
+  const [currentTime, setCurrentTime] = useState(dayjs().format('YYYY-MM-DD HH:mm:ss'))
+
+  // 更新实时时间
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(dayjs().format('YYYY-MM-DD HH:mm:ss'))
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
 
   // 获取统计数据
   const fetchStatistics = async () => {
@@ -107,6 +118,9 @@ const Home = () => {
   return (
     <Row className="home">
       <Col span={24}>
+        <div className="current-time">
+          当前时间：{currentTime}
+        </div>
         <div className="num">
           {countData.map((item, index) => (
             <Card key={index}>
