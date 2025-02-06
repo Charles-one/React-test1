@@ -1,0 +1,15 @@
+.overtime-request {
+    padding: 20px;
+}
+
+.overtime-request .header {
+    margin-bottom: 20px;
+}
+
+.overtime-request .ant-table {
+    background: #fff;
+}
+
+.overtime-request .ant-form-inline {
+    margin-bottom: 16px;
+}

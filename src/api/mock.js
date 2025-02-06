@@ -4,6 +4,7 @@ import permissionApi from './mockServeData/permission'
 import departmentApi from './mockServeData/department'
 import employeeApi from './mockServeData/employee'
 import attendanceApi from './mockServeData/attendance'
+import overtimeApi from './mockServeData/overtime'
 
 Mock.mock('/home/getData', homeApi.getStatisticalData)
 Mock.mock(/permission\/getMenu/, 'post', permissionApi.getMenu)
@@ -25,3 +26,9 @@ Mock.mock('/attendance/list', 'post', attendanceApi.getAttendanceList)
 Mock.mock('/attendance/add', 'post', attendanceApi.addAttendance)
 Mock.mock('/attendance/update', 'post', attendanceApi.updateAttendance)
 Mock.mock('/attendance/delete', 'post', attendanceApi.deleteAttendance)
+
+// 加班申请相关接口
+Mock.mock('/overtime/list', 'post', overtimeApi.getOvertimeList)
+Mock.mock('/overtime/add', 'post', overtimeApi.addOvertime)
+Mock.mock('/overtime/update', 'post', overtimeApi.updateOvertime)
+Mock.mock('/overtime/delete', 'post', overtimeApi.deleteOvertime)

@@ -112,3 +112,36 @@ export const deleteAttendance = (data) => {
         data
     })
 }
+
+// 加班申请相关接口
+export const getOvertimeList = (data) => {
+    return axios.request({
+        url: '/overtime/list',
+        method: 'post',
+        data
+    })
+}
+
+export const addOvertime = (data) => {
+    return axios.request({
+        url: '/overtime/add',
+        method: 'post',
+        data
+    })
+}
+
+export const updateOvertime = (data) => {
+    return axios.request({
+        url: '/overtime/update',
+        method: 'post',
+        data
+    })
+}
+
+export const deleteOvertime = (data) => {
+    return axios.request({
+        url: '/overtime/delete',
+        method: 'post',
+        data
+    })
+}
