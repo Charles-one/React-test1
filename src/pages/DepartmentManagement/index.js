@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Button, Modal, Form, Input, Select, message, Space } from 'antd'
-import { getDepartmentList, addDepartment, updateDepartment, deleteDepartment } from '../../api'
+import { getDepartmentList, addDepartment, updateDepartment, deleteDepartment, getEmployeeList } from '../../api'
 import { useLocation } from 'react-router-dom'
 import './DepartmentManagement.css'
 

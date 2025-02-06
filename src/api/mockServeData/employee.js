@@ -38,26 +38,34 @@ const saveToStorage = () => {
 
 // 更新部门人数
 const updateDepartmentCount = () => {
-    const departmentList = JSON.parse(localStorage.getItem('departmentList'))
+    const departmentList = JSON.parse(localStorage.getItem('departmentList')) || []
     if (departmentList) {
-        // 计算每个部门的人数
-        const countMap = employeeList.reduce((acc, emp) => {
-            acc[emp.departmentId] = (acc[emp.departmentId] || 0) + 1
-            return acc
-        }, {})
-
-        // 更新部门列表的人数
+        // 重置所有部门人数为0
         departmentList.forEach(dept => {
-            dept.memberCount = countMap[dept.id] || 0
+            dept.memberCount = 0
+        })
+
+        // 计算每个部门的在职人数
+        employeeList.forEach(emp => {
+            if (emp.status === '在职') {  // 只统计在职员工
+                const department = departmentList.find(dept => dept.id === emp.departmentId)
+                if (department) {
+                    department.memberCount++
+                }
+            }
         })
 
         localStorage.setItem('departmentList', JSON.stringify(departmentList))
     }
 }
 
+// 初始化时立即更新部门人数
+updateDepartmentCount()
+
 export default {
     // 获取员工列表
     getEmployeeList: () => {
+        updateDepartmentCount() // 每次获取列表时都更新部门人数
         return {
             code: 20000,
             data: {

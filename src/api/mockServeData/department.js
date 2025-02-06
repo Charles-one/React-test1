@@ -4,7 +4,7 @@ const initialDepartmentList = [
         id: 1,
         name: '技术部',
         manager: '张三',
-        memberCount: 15,
+        memberCount: 1,  // 初始值设为0，后面会根据员工数据更新
         createTime: '2024-03-15 09:00:00',
         status: '正常'
     },
@@ -12,7 +12,7 @@ const initialDepartmentList = [
         id: 2,
         name: '人事部',
         manager: '李四',
-        memberCount: 8,
+        memberCount: 1,
         createTime: '2024-03-15 09:00:00',
         status: '正常'
     },
@@ -20,15 +20,20 @@ const initialDepartmentList = [
         id: 3,
         name: '市场部',
         manager: '王五',
-        memberCount: 12,
+        memberCount: 0,
         createTime: '2024-03-15 09:00:00',
         status: '正常'
     }
 ]
 
 // 从 localStorage 获取数据，如果没有则使用初始数据
-let departmentList = JSON.parse(localStorage.getItem('departmentList')) || initialDepartmentList
-// 从 localStorage 获取最后使用的 ID，如果没有则使用初始数据长度
+let departmentList = JSON.parse(localStorage.getItem('departmentList'))
+if (!departmentList || departmentList.length === 0) {
+    departmentList = initialDepartmentList
+    // 第一次加载时，保存初始数据到 localStorage
+    localStorage.setItem('departmentList', JSON.stringify(departmentList))
+}
+
 let nextId = parseInt(localStorage.getItem('departmentNextId')) || departmentList.length + 1
 
 // 保存数据到 localStorage
@@ -40,25 +45,33 @@ const saveToStorage = () => {
 // 更新部门人数
 const updateDepartmentCount = () => {
     const employeeList = JSON.parse(localStorage.getItem('employeeList')) || []
-    // 计算每个部门的人数
-    const countMap = employeeList.reduce((acc, emp) => {
-        acc[emp.departmentId] = (acc[emp.departmentId] || 0) + 1
-        return acc
-    }, {})
+    const departmentCounts = {}
 
-    // 更新部门列表的人数
+    // 先统计每个部门的在职人数
+    employeeList.forEach(emp => {
+        if (emp.status === '在职') {
+            departmentCounts[emp.departmentId] = (departmentCounts[emp.departmentId] || 0) + 1
+        }
+    })
+
+    // 更新部门人数，如果没有员工数据则保持原有的 memberCount
     departmentList.forEach(dept => {
-        dept.memberCount = countMap[dept.id] || 0
+        if (departmentCounts.hasOwnProperty(dept.id)) {
+            dept.memberCount = departmentCounts[dept.id]
+        }
+        // 如果没有找到对应的员工数据，保持原有的 memberCount 不变
     })
 
     saveToStorage()
 }
 
+// 初始化时立即更新部门人数
+updateDepartmentCount()
+
 export default {
     // 获取部门列表
     getDepartmentList: () => {
-        // 每次获取部门列表时更新人数
-        updateDepartmentCount()
+        updateDepartmentCount()  // 每次获取列表时都更新人数
         return {
             code: 20000,
             data: {
