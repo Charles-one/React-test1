@@ -79,3 +79,36 @@ export const deleteEmployee = (data) => {
         data
     })
 }
+
+// 考勤管理相关接口
+export const getAttendanceList = (data) => {
+    return axios.request({
+        url: '/attendance/list',
+        method: 'post',
+        data
+    })
+}
+
+export const addAttendance = (data) => {
+    return axios.request({
+        url: '/attendance/add',
+        method: 'post',
+        data
+    })
+}
+
+export const updateAttendance = (data) => {
+    return axios.request({
+        url: '/attendance/update',
+        method: 'post',
+        data
+    })
+}
+
+export const deleteAttendance = (data) => {
+    return axios.request({
+        url: '/attendance/delete',
+        method: 'post',
+        data
+    })
+}

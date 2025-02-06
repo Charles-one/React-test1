@@ -1,0 +1,15 @@
+.attendance-management {
+    padding: 20px;
+}
+
+.attendance-management .header {
+    margin-bottom: 20px;
+}
+
+.attendance-management .ant-table {
+    background: #fff;
+}
+
+.attendance-management .ant-form-inline {
+    margin-bottom: 16px;
+}

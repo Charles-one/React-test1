@@ -74,7 +74,13 @@ const EmployeeManagement = () => {
     setFilteredEmployees(employees)
   }, [employees])
 
-  // 表格列配置
+  // 在组件内添加一个函数来检查部门状态
+  const getDepartmentStatus = (departmentId) => {
+    const department = departments.find(dept => dept.id === departmentId)
+    return department?.status
+  }
+
+  // 修改表格列配置
   const columns = [
     {
       title: '姓名',
@@ -100,6 +106,16 @@ const EmployeeManagement = () => {
       title: '所属部门',
       dataIndex: 'departmentName',
       key: 'departmentName',
+      render: (text, record) => {
+        const departmentStatus = getDepartmentStatus(record.departmentId)
+        return (
+          <span style={{
+            color: departmentStatus === '停用' ? '#ff4d4f' : 'inherit'
+          }}>
+            {text}
+          </span>
+        )
+      }
     },
     {
       title: '职位',
