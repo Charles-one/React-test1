@@ -21,6 +21,8 @@ import {
 import { useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
 import './OvertimeRequest.css';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -34,6 +36,7 @@ const OvertimeRequest = () => {
   const [form] = Form.useForm();
   const [searchForm] = Form.useForm();
   const location = useLocation();
+  const { t } = useTranslation();
 
   // 获取加班申请列表
   const fetchOvertimes = async (searchParams = {}) => {
@@ -218,14 +221,20 @@ const OvertimeRequest = () => {
   };
 
   // 删除申请
-  const handleDelete = async (record) => {
-    try {
-      await deleteOvertime({ id: record.id });
-      message.success('删除成功');
-      fetchOvertimes();
-    } catch (error) {
-      message.error('删除失败');
-    }
+  const handleDelete = (record) => {
+    Modal.confirm({
+      title: t('common.deleteConfirm'),
+      icon: <ExclamationCircleFilled />,
+      okText: t('common.yes'),
+      okType: 'danger',
+      cancelText: t('common.no'),
+      onOk() {
+        deleteOvertime({ id: record.id }).then(() => {
+          message.success(t('common.deleteSuccess'));
+          fetchOvertimes();
+        });
+      },
+    });
   };
 
   return (

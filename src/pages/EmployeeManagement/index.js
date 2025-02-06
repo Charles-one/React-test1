@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, Select, message, Space, InputNumber } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import {
   getEmployeeList,
   addEmployee,
@@ -12,8 +14,10 @@ import './user.css';
 
 const { Option } = Select;
 const { Search } = Input;
+const { confirm } = Modal;
 
 const EmployeeManagement = () => {
+  const { t } = useTranslation();
   const [employees, setEmployees] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -144,11 +148,11 @@ const EmployeeManagement = () => {
       title: '操作',
       key: 'action',
       render: (_, record) => (
-        <Space>
+        <Space size="middle">
           <Button type="link" onClick={() => handleEdit(record)}>
             编辑
           </Button>
-          <Button type="link" danger onClick={() => handleDelete(record)}>
+          <Button type="link" danger onClick={() => showDeleteConfirm(record)}>
             删除
           </Button>
         </Space>
@@ -183,11 +187,25 @@ const EmployeeManagement = () => {
     setModalVisible(true);
   };
 
-  // 删除员工
-  const handleDelete = async (employee) => {
+  // 删除确认
+  const showDeleteConfirm = (record) => {
+    confirm({
+      title: t('common.deleteConfirm'),
+      icon: <ExclamationCircleFilled />,
+      okText: t('common.yes'),
+      okType: 'danger',
+      cancelText: t('common.no'),
+      onOk() {
+        handleDelete(record);
+      },
+    });
+  };
+
+  // 删除操作
+  const handleDelete = async (record) => {
     try {
-      await deleteEmployee({ id: employee.id });
-      message.success('删除成功');
+      await deleteEmployee({ id: record.id });
+      message.success(t('common.deleteSuccess'));
       await fetchEmployees();
       await fetchDepartments();
     } catch (error) {

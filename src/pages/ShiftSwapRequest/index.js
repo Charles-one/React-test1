@@ -22,6 +22,8 @@ import {
 import { useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
 import './ShiftSwapRequest.css';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -36,6 +38,7 @@ const ShiftSwapRequest = () => {
   const [form] = Form.useForm();
   const [searchForm] = Form.useForm();
   const location = useLocation();
+  const { t } = useTranslation();
 
   // 获取调休申请列表
   const fetchShiftSwaps = async (searchParams = {}) => {
@@ -237,14 +240,20 @@ const ShiftSwapRequest = () => {
   };
 
   // 删除申请
-  const handleDelete = async (record) => {
-    try {
-      await deleteShiftSwap({ id: record.id });
-      message.success('删除成功');
-      fetchShiftSwaps();
-    } catch (error) {
-      message.error('删除失败');
-    }
+  const handleDelete = (record) => {
+    Modal.confirm({
+      title: t('common.deleteConfirm'),
+      icon: <ExclamationCircleFilled />,
+      okText: t('common.yes'),
+      okType: 'danger',
+      cancelText: t('common.no'),
+      onOk() {
+        deleteShiftSwap({ id: record.id }).then(() => {
+          message.success(t('common.deleteSuccess'));
+          fetchShiftSwaps();
+        });
+      },
+    });
   };
 
   // 当选择员工时，获取该员工的加班记录

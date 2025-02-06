@@ -25,7 +25,11 @@
     "remark": "备注",
     "systemName": "企业员工管理系统",
     "profile": "个人中心",
-    "logout": "退出"
+    "logout": "退出",
+    "deleteConfirm": "确定要删除吗？",
+    "deleteSuccess": "删除成功",
+    "yes": "是",
+    "no": "否"
   },
   "login": {
     "title": "系统登录",

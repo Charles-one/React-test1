@@ -15,6 +15,8 @@ import { getLeaveList, addLeave, updateLeave, deleteLeave, getEmployeeList } fro
 import { useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
 import './LeaveRequest.css';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -28,6 +30,7 @@ const LeaveRequest = () => {
   const [form] = Form.useForm();
   const [searchForm] = Form.useForm();
   const location = useLocation();
+  const { t } = useTranslation();
 
   // 获取请假申请列表
   const fetchLeaves = async (searchParams = {}) => {
@@ -217,14 +220,20 @@ const LeaveRequest = () => {
   };
 
   // 删除申请
-  const handleDelete = async (record) => {
-    try {
-      await deleteLeave({ id: record.id });
-      message.success('删除成功');
-      fetchLeaves();
-    } catch (error) {
-      message.error('删除失败');
-    }
+  const handleDelete = (record) => {
+    Modal.confirm({
+      title: t('common.deleteConfirm'),
+      icon: <ExclamationCircleFilled />,
+      okText: t('common.yes'),
+      okType: 'danger',
+      cancelText: t('common.no'),
+      onOk() {
+        deleteLeave({ id: record.id }).then(() => {
+          message.success(t('common.deleteSuccess'));
+          fetchLeaves();
+        });
+      },
+    });
   };
 
   return (

@@ -25,7 +25,11 @@
     "remark": "Remark",
     "systemName": "Employee Management System",
     "profile": "Profile",
-    "logout": "Logout"
+    "logout": "Logout",
+    "deleteConfirm": "Are you sure you want to delete?",
+    "deleteSuccess": "Delete successful",
+    "yes": "Yes",
+    "no": "No"
   },
   "login": {
     "title": "System Login",

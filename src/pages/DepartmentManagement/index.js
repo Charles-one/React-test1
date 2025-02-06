@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, Select, message, Space } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import {
   getDepartmentList,
   addDepartment,
@@ -11,8 +13,10 @@ import { useLocation } from 'react-router-dom';
 import './DepartmentManagement.css';
 
 const { Option } = Select;
+const { confirm } = Modal;
 
 const DepartmentManagement = () => {
+  const { t } = useTranslation();
   const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -69,11 +73,11 @@ const DepartmentManagement = () => {
       title: '操作',
       key: 'action',
       render: (_, record) => (
-        <Space>
+        <Space size="middle">
           <Button type="link" onClick={() => handleEdit(record)}>
             编辑
           </Button>
-          <Button type="link" danger onClick={() => handleDelete(record)}>
+          <Button type="link" danger onClick={() => showDeleteConfirm(record)}>
             删除
           </Button>
         </Space>
@@ -107,15 +111,26 @@ const DepartmentManagement = () => {
     setModalVisible(true);
   };
 
-  // 删除部门
-  const handleDelete = async (department) => {
-    try {
-      await deleteDepartment({ id: department.id });
-      message.success('删除成功');
+  // 删除确认
+  const showDeleteConfirm = (record) => {
+    confirm({
+      title: t('common.deleteConfirm'),
+      icon: <ExclamationCircleFilled />,
+      okText: t('common.yes'),
+      okType: 'danger',
+      cancelText: t('common.no'),
+      onOk() {
+        handleDelete(record);
+      },
+    });
+  };
+
+  // 删除操作
+  const handleDelete = (record) => {
+    deleteDepartment({ id: record.id }).then(() => {
+      message.success(t('common.deleteSuccess'));
       fetchDepartments();
-    } catch (error) {
-      message.error('删除失败');
-    }
+    });
   };
 
   return (

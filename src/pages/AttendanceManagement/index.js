@@ -21,6 +21,8 @@ import {
 import { useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
 import './AttendanceManagement.css';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 
 const { Option } = Select;
 
@@ -32,6 +34,7 @@ const AttendanceManagement = () => {
   const [form] = Form.useForm();
   const [editingAttendance, setEditingAttendance] = useState(null);
   const location = useLocation();
+  const { t } = useTranslation();
 
   // 搜索表单
   const [searchForm] = Form.useForm();
@@ -179,14 +182,20 @@ const AttendanceManagement = () => {
   };
 
   // 删除考勤
-  const handleDelete = async (attendance) => {
-    try {
-      await deleteAttendance({ id: attendance.id });
-      message.success('删除成功');
-      fetchAttendances();
-    } catch (error) {
-      message.error('删除失败');
-    }
+  const handleDelete = (record) => {
+    Modal.confirm({
+      title: t('common.deleteConfirm'),
+      icon: <ExclamationCircleFilled />,
+      okText: t('common.yes'),
+      okType: 'danger',
+      cancelText: t('common.no'),
+      onOk() {
+        deleteAttendance({ id: record.id }).then(() => {
+          message.success(t('common.deleteSuccess'));
+          fetchAttendances();
+        });
+      },
+    });
   };
 
   return (
