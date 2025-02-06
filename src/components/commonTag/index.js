@@ -7,7 +7,7 @@ import { closeTab, setCurrentMenu } from '../../store/reducers/tab'
 
 const CommonTag = () => {
     const tabsList = useSelector(state => state.tab.tabsList)
-    const currentMenu =  useSelector(state => state.tab.currentMenu)
+    const currentMenu = useSelector(state => state.tab.currentMenu)
     const dispatch = useDispatch()
     const action = useLocation()
     const navigate = useNavigate()
@@ -43,16 +43,16 @@ const CommonTag = () => {
     const setTag = (flag, item, index) => {
         return (
             flag ?
-            <Tag color="#55acee" closeIcon onClose={() => handleClose(item, index)} key={item.name}>{item.label}</Tag>
-            :
-            <Tag onClick={() => handleChange(item)} key={item.name}>{item.label}</Tag>
+                <Tag color="#55acee" closeIcon onClose={() => handleClose(item, index)} key={item.name}>{item.label}</Tag>
+                :
+                <Tag onClick={() => handleChange(item)} key={item.name}>{item.label}</Tag>
         )
     }
-    return(
+    return (
         <Space className="common-tag" size={[0, 8]} wrap>
-            { currentMenu && tabsList.map((item, index) => (
+            {currentMenu && tabsList.map((item, index) => (
                 setTag(currentMenu.path === item.path, item, index)
-            )) }
+            ))}
         </Space>
     )
 }

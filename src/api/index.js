@@ -46,3 +46,35 @@ export const deleteUser = (data) => {
         data
     })
 }
+
+// 部门管理相关接口
+export const getDepartmentList = () => {
+    return axios.request({
+        url: '/department/list',
+        method: 'get'
+    })
+}
+
+export const addDepartment = (data) => {
+    return axios.request({
+        url: '/department/add',
+        method: 'post',
+        data
+    })
+}
+
+export const updateDepartment = (data) => {
+    return axios.request({
+        url: '/department/update',
+        method: 'post',
+        data
+    })
+}
+
+export const deleteDepartment = (data) => {
+    return axios.request({
+        url: '/department/delete',
+        method: 'post',
+        data
+    })
+}

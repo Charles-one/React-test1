@@ -1,0 +1,11 @@
+.department-management {
+    padding: 20px;
+}
+
+.department-management .header {
+    margin-bottom: 20px;
+}
+
+.department-management .ant-table {
+    background: #fff;
+}

@@ -56,7 +56,7 @@ const normalOption = {
 
 const Echarts = ({ style, chartData, isAxisChart = true }) => {
   const echartRef = useRef()
-  const echartObj  = useRef(null)
+  const echartObj = useRef(null)
   useEffect(() => {
     let options
     if (!echartObj.current) {

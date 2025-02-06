@@ -1,13 +1,13 @@
 import Mock from 'mockjs'
 import homeApi from './mockServeData/home'
-import userApi from './mockServeData/user'
 import permissionApi from './mockServeData/permission'
+import departmentApi from './mockServeData/department'
 
 Mock.mock('/home/getData', homeApi.getStatisticalData)
-Mock.mock(/user\/add/, 'post', userApi.createUser)
-Mock.mock(/user\/edit/, 'post', userApi.updateUser)
-
-Mock.mock(/user\/getUser/, 'get', userApi.getUserList)
-Mock.mock(/user\/del/, 'post', userApi.deleteUser)
-
 Mock.mock(/permission\/getMenu/, 'post', permissionApi.getMenu)
+
+// 部门管理相关接口
+Mock.mock('/department/list', 'get', departmentApi.getDepartmentList)
+Mock.mock('/department/add', 'post', departmentApi.addDepartment)
+Mock.mock('/department/update', 'post', departmentApi.updateDepartment)
+Mock.mock('/department/delete', 'post', departmentApi.deleteDepartment)
