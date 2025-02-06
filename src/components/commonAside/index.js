@@ -2,36 +2,42 @@ import React from 'react';
 import { Menu, Layout } from 'antd';
 import * as Icon from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import MenuConfig from '../../config';
 import { useDispatch } from 'react-redux';
 import { selectMenuList } from '../../store/reducers/tab';
 
 const { Sider } = Layout;
 const iconToElement = (name) => React.createElement(Icon[name]);
-const items = MenuConfig.map((icon) => {
-  const child = {
-    key: `${icon.path}`,
-    icon: iconToElement(icon.icon),
-    label: `${icon.label}`,
-  };
-  if (icon.children) {
-    child.children = icon.children.map((item) => {
-      return {
-        key: item.path,
-        label: item.label,
-      };
-    });
-  }
-  return child;
-});
+
 const CommonAside = ({ collapsed }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // 将 items 的定义移到组件内部
+  const items = MenuConfig.map((icon) => {
+    const child = {
+      key: `${icon.path}`,
+      icon: iconToElement(icon.icon),
+      label: t(icon.label),
+    };
+    if (icon.children) {
+      child.children = icon.children.map((item) => {
+        return {
+          key: item.path,
+          label: t(item.label),
+        };
+      });
+    }
+    return child;
+  });
 
   // 添加数据到store
   const setTabsList = (val) => {
     dispatch(selectMenuList(val));
   };
+
   // 点击菜单
   const selectMenu = (e) => {
     let data;
@@ -55,9 +61,10 @@ const CommonAside = ({ collapsed }) => {
     // 页面跳转
     navigate(e.key);
   };
+
   return (
     <Sider width={200} collapsed={collapsed}>
-      <h3 className="app-name">{collapsed ? 'Charles' : '企业员工管理系统'}</h3>
+      <h3 className="app-name">{collapsed ? 'Charles' : t('common.systemName')}</h3>
       <Menu
         mode="inline"
         theme="dark"

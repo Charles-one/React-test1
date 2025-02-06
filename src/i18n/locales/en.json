@@ -1,0 +1,38 @@
+{
+  "menu": {
+    "home": "Home",
+    "departmentManagement": "Department",
+    "employeeManagement": "Employee",
+    "attendanceManagement": "Attendance",
+    "overtimeRequest": "Overtime",
+    "leaveRequest": "Leave",
+    "shiftSwapRequest": "Shift Swap",
+    "attendanceSummary": "Summary",
+    "other": "Other",
+    "myProfile": "My Profile",
+    "changePassword": "Change Password"
+  },
+  "common": {
+    "search": "Search",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "operation": "Operation",
+    "status": "Status",
+    "remark": "Remark",
+    "systemName": "Employee Management System",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "login": {
+    "title": "System Login",
+    "username": "Username",
+    "password": "Password",
+    "login": "Login",
+    "usernamePlaceholder": "Please input username",
+    "passwordPlaceholder": "Please input password"
+  }
+} 

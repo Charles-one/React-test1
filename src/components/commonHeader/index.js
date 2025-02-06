@@ -5,10 +5,13 @@ import './index.css';
 import { useDispatch } from 'react-redux';
 import { collapseMenu } from '../../store/reducers/tab';
 import { useNavigate } from 'react-router-dom';
+import LanguageSwitch from '../LanguageSwitch';
+import { useTranslation } from 'react-i18next';
 
 const { Header } = Layout;
 
 const CommonHeader = ({ collapsed }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const setCollapsed = () => {
     dispatch(collapseMenu());
@@ -19,7 +22,7 @@ const CommonHeader = ({ collapsed }) => {
       key: '1',
       label: (
         <a target="_blank" rel="noopener noreferrer">
-          个人中心
+          {t('common.profile')}
         </a>
       ),
     },
@@ -27,7 +30,7 @@ const CommonHeader = ({ collapsed }) => {
       key: '2',
       label: (
         <a onClick={() => logout(!collapsed)} target="_blank" rel="noopener noreferrer">
-          退出
+          {t('common.logout')}
         </a>
       ),
     },
@@ -50,11 +53,12 @@ const CommonHeader = ({ collapsed }) => {
           backgroundColor: '#fff',
         }}
       />
-      <Dropdown menu={{ items }}>
-        <a onClick={(e) => e.preventDefault()}>
-          <Avatar size={36} src={<img src={require('../../assets/images/user.png')} />} />
-        </a>
-      </Dropdown>
+      <Space>
+        <LanguageSwitch />
+        <Dropdown menu={{ items }}>
+          <Avatar size={36} src={require('../../assets/images/user.png')} />
+        </Dropdown>
+      </Space>
     </Header>
   );
 };

@@ -1,0 +1,38 @@
+{
+  "menu": {
+    "home": "首页",
+    "departmentManagement": "部门管理",
+    "employeeManagement": "员工管理",
+    "attendanceManagement": "考勤管理",
+    "overtimeRequest": "加班申请",
+    "leaveRequest": "请假申请",
+    "shiftSwapRequest": "调休申请",
+    "attendanceSummary": "考勤汇总",
+    "other": "其他",
+    "myProfile": "我的信息",
+    "changePassword": "修改密码"
+  },
+  "common": {
+    "search": "搜索",
+    "add": "添加",
+    "edit": "编辑",
+    "delete": "删除",
+    "submit": "提交",
+    "cancel": "取消",
+    "confirm": "确认",
+    "operation": "操作",
+    "status": "状态",
+    "remark": "备注",
+    "systemName": "企业员工管理系统",
+    "profile": "个人中心",
+    "logout": "退出"
+  },
+  "login": {
+    "title": "系统登录",
+    "username": "账号",
+    "password": "密码",
+    "login": "登录",
+    "usernamePlaceholder": "请输入账号",
+    "passwordPlaceholder": "请输入密码"
+  }
+} 

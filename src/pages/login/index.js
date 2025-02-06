@@ -3,8 +3,10 @@ import { Form, Input, Button, message } from 'antd';
 import './login.css';
 import { getMenu } from '../../api';
 import { useNavigate, Navigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   if (localStorage.getItem('token')) {
     return <Navigate to="/home" replace />;
@@ -46,16 +48,24 @@ const Login = () => {
   return (
     <div className="login-page">
       <Form className="login-container" onFinish={handleSubmit}>
-        <div className="login_title">系统登录</div>
-        <Form.Item label="账号" name="username" rules={[{ required: true, message: '请输入账号' }]}>
-          <Input placeholder="请输入账号" />
+        <div className="login_title">{t('login.title')}</div>
+        <Form.Item
+          label={t('login.username')}
+          name="username"
+          rules={[{ required: true, message: t('login.usernamePlaceholder') }]}
+        >
+          <Input placeholder={t('login.usernamePlaceholder')} />
         </Form.Item>
-        <Form.Item label="密码" name="password" rules={[{ required: true, message: '请输入密码' }]}>
-          <Input.Password placeholder="请输入密码" />
+        <Form.Item
+          label={t('login.password')}
+          name="password"
+          rules={[{ required: true, message: t('login.passwordPlaceholder') }]}
+        >
+          <Input.Password placeholder={t('login.passwordPlaceholder')} />
         </Form.Item>
         <Form.Item className="login-button">
           <Button type="primary" htmlType="submit">
-            登录
+            {t('login.login')}
           </Button>
         </Form.Item>
       </Form>
