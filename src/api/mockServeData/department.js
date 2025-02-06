@@ -4,7 +4,7 @@ const initialDepartmentList = [
         id: 1,
         name: '技术部',
         manager: 'Charles',
-        memberCount: 1,  // 初始值设为0，后面会根据员工数据更新
+        memberCount: 0,  // 初始设为0，后面会更新
         createTime: '2025-01-01 09:00:00',
         status: '正常'
     },
@@ -12,7 +12,7 @@ const initialDepartmentList = [
         id: 2,
         name: '人事部',
         manager: 'Charles',
-        memberCount: 1,
+        memberCount: 0,  // 初始设为0，后面会更新
         createTime: '2025-01-01 09:00:00',
         status: '正常'
     },
@@ -20,17 +20,65 @@ const initialDepartmentList = [
         id: 3,
         name: '市场部',
         manager: 'Charles',
-        memberCount: 0,
+        memberCount: 0,  // 初始设为0，后面会更新
         createTime: '2025-01-01 09:00:00',
         status: '正常'
     }
 ]
 
+// 更新部门人数
+const updateDepartmentCount = () => {
+    const employeeList = JSON.parse(localStorage.getItem('employeeList')) || []
+    const departmentCounts = {}
+
+    // 统计每个部门的在职人数
+    employeeList.forEach(emp => {
+        if (emp.status === '在职') {
+            departmentCounts[emp.departmentId] = (departmentCounts[emp.departmentId] || 0) + 1
+        }
+    })
+
+    // 更新部门人数
+    departmentList.forEach(dept => {
+        dept.memberCount = departmentCounts[dept.id] || 0
+    })
+
+    // 保存更新后的部门列表
+    localStorage.setItem('departmentList', JSON.stringify(departmentList))
+}
+
 // 从 localStorage 获取数据，如果没有则使用初始数据
 let departmentList = JSON.parse(localStorage.getItem('departmentList'))
 if (!departmentList || departmentList.length === 0) {
+    // 先设置初始部门列表
     departmentList = initialDepartmentList
-    // 第一次加载时，保存初始数据到 localStorage
+    // 从 employee.js 获取初始员工数据
+    const initialEmployeeList = [
+        {
+            id: 1,
+            name: 'Charles',
+            departmentId: 1,
+            status: '在职'
+        },
+        {
+            id: 2,
+            name: 'Charles1',
+            departmentId: 2,
+            status: '在职'
+        }
+    ]
+
+    // 计算初始部门人数
+    initialEmployeeList.forEach(emp => {
+        if (emp.status === '在职') {
+            const department = departmentList.find(dept => dept.id === emp.departmentId)
+            if (department) {
+                department.memberCount++
+            }
+        }
+    })
+
+    // 保存到 localStorage
     localStorage.setItem('departmentList', JSON.stringify(departmentList))
 }
 
@@ -41,32 +89,6 @@ const saveToStorage = () => {
     localStorage.setItem('departmentList', JSON.stringify(departmentList))
     localStorage.setItem('departmentNextId', nextId.toString())
 }
-
-// 更新部门人数
-const updateDepartmentCount = () => {
-    const employeeList = JSON.parse(localStorage.getItem('employeeList')) || []
-    const departmentCounts = {}
-
-    // 先统计每个部门的在职人数
-    employeeList.forEach(emp => {
-        if (emp.status === '在职') {
-            departmentCounts[emp.departmentId] = (departmentCounts[emp.departmentId] || 0) + 1
-        }
-    })
-
-    // 更新部门人数，如果没有员工数据则保持原有的 memberCount
-    departmentList.forEach(dept => {
-        if (departmentCounts.hasOwnProperty(dept.id)) {
-            dept.memberCount = departmentCounts[dept.id]
-        }
-        // 如果没有找到对应的员工数据，保持原有的 memberCount 不变
-    })
-
-    saveToStorage()
-}
-
-// 初始化时立即更新部门人数
-updateDepartmentCount()
 
 export default {
     // 获取部门列表
@@ -114,6 +136,7 @@ export default {
                 status
             }
             saveToStorage()
+            updateDepartmentCount() // 确保在更新部门后重新计算人数
         }
         return {
             code: 20000,

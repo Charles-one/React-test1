@@ -210,7 +210,7 @@ const EmployeeManagement = () => {
               <Option value="position">职位</Option>
               <Option value="status">状态</Option>
             </Select>
-            <Search
+            <Input.Search
               placeholder="请输入搜索内容"
               allowClear
               onSearch={handleSearch}
@@ -221,6 +221,7 @@ const EmployeeManagement = () => {
                 }
               }}
               style={{ width: 200 }}
+              role="searchbox"
             />
           </Space>
         </Space>

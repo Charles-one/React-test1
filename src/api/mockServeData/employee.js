@@ -28,7 +28,14 @@ const initialEmployeeList = [
     }
 ]
 
-let employeeList = JSON.parse(localStorage.getItem('employeeList')) || initialEmployeeList
+// 从 localStorage 获取数据，如果没有则使用初始数据
+let employeeList = JSON.parse(localStorage.getItem('employeeList'))
+if (!employeeList) {
+    employeeList = initialEmployeeList
+    // 保存初始数据到 localStorage
+    localStorage.setItem('employeeList', JSON.stringify(employeeList))
+}
+
 let nextId = parseInt(localStorage.getItem('employeeNextId')) || employeeList.length + 1
 
 const saveToStorage = () => {
@@ -39,24 +46,24 @@ const saveToStorage = () => {
 // 更新部门人数
 const updateDepartmentCount = () => {
     const departmentList = JSON.parse(localStorage.getItem('departmentList')) || []
-    if (departmentList) {
-        // 重置所有部门人数为0
-        departmentList.forEach(dept => {
-            dept.memberCount = 0
-        })
 
-        // 计算每个部门的在职人数
-        employeeList.forEach(emp => {
-            if (emp.status === '在职') {  // 只统计在职员工
-                const department = departmentList.find(dept => dept.id === emp.departmentId)
-                if (department) {
-                    department.memberCount++
-                }
+    // 先将所有部门人数重置为0
+    departmentList.forEach(dept => {
+        dept.memberCount = 0
+    })
+
+    // 重新统计每个部门的在职人数
+    employeeList.forEach(emp => {
+        if (emp.status === '在职') {
+            const department = departmentList.find(dept => dept.id === parseInt(emp.departmentId))
+            if (department) {
+                department.memberCount++
             }
-        })
+        }
+    })
 
-        localStorage.setItem('departmentList', JSON.stringify(departmentList))
-    }
+    // 保存更新后的部门列表
+    localStorage.setItem('departmentList', JSON.stringify(departmentList))
 }
 
 // 初始化时立即更新部门人数
@@ -112,7 +119,7 @@ export default {
         if (index > -1) {
             // 获取新部门信息
             const departmentList = JSON.parse(localStorage.getItem('departmentList'))
-            const department = departmentList.find(d => d.id === departmentId)
+            const department = departmentList.find(d => d.id === parseInt(departmentId))
 
             employeeList[index] = {
                 ...employeeList[index],
@@ -120,13 +127,13 @@ export default {
                 age,
                 gender,
                 phone,
-                departmentId,
+                departmentId: parseInt(departmentId), // 确保转换为数字
                 departmentName: department.name,
                 position,
                 status
             }
             saveToStorage()
-            updateDepartmentCount()
+            updateDepartmentCount()  // 更新部门人数
         }
         return {
             code: 20000,
