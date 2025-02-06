@@ -69,7 +69,7 @@ export default [
       },
       {
         path: '/other/ChangePassword',
-        name: 'MyProfile',
+        name: 'ChangePassword',
         label: 'menu.changePassword',
         icon: 'UnlockOutlined',
       },
