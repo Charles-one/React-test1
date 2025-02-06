@@ -1,0 +1,15 @@
+.shiftswap-request {
+    padding: 20px;
+}
+
+.shiftswap-request .header {
+    margin-bottom: 20px;
+}
+
+.shiftswap-request .ant-table {
+    background: #fff;
+}
+
+.shiftswap-request .ant-form-inline {
+    margin-bottom: 16px;
+}

@@ -6,6 +6,7 @@ import employeeApi from './mockServeData/employee'
 import attendanceApi from './mockServeData/attendance'
 import overtimeApi from './mockServeData/overtime'
 import leaveApi from './mockServeData/leave'
+import shiftSwapApi from './mockServeData/shiftswap'
 
 Mock.mock('/home/getData', homeApi.getStatisticalData)
 Mock.mock(/permission\/getMenu/, 'post', permissionApi.getMenu)
@@ -39,3 +40,9 @@ Mock.mock('/leave/list', 'post', leaveApi.getLeaveList)
 Mock.mock('/leave/add', 'post', leaveApi.addLeave)
 Mock.mock('/leave/update', 'post', leaveApi.updateLeave)
 Mock.mock('/leave/delete', 'post', leaveApi.deleteLeave)
+
+// 调休申请相关接口
+Mock.mock('/shiftswap/list', 'post', shiftSwapApi.getShiftSwapList)
+Mock.mock('/shiftswap/add', 'post', shiftSwapApi.addShiftSwap)
+Mock.mock('/shiftswap/update', 'post', shiftSwapApi.updateShiftSwap)
+Mock.mock('/shiftswap/delete', 'post', shiftSwapApi.deleteShiftSwap)

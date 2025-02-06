@@ -178,3 +178,36 @@ export const deleteLeave = (data) => {
         data
     })
 }
+
+// 调休申请相关接口
+export const getShiftSwapList = (data) => {
+    return axios.request({
+        url: '/shiftswap/list',
+        method: 'post',
+        data
+    })
+}
+
+export const addShiftSwap = (data) => {
+    return axios.request({
+        url: '/shiftswap/add',
+        method: 'post',
+        data
+    })
+}
+
+export const updateShiftSwap = (data) => {
+    return axios.request({
+        url: '/shiftswap/update',
+        method: 'post',
+        data
+    })
+}
+
+export const deleteShiftSwap = (data) => {
+    return axios.request({
+        url: '/shiftswap/delete',
+        method: 'post',
+        data
+    })
+}
